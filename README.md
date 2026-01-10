@@ -35,7 +35,7 @@ Technologies Used
 How to Run the Project
 
 1. Download or Clone the Repository
-   git clone 
+   git clone https://github.com/vinay24156/Secure-Multiparty-Computation-Protocol-Simulator
 
 2. Open the Simulator  
    Open SMPC.html in any modern browser (Chrome, Firefox, Edge).

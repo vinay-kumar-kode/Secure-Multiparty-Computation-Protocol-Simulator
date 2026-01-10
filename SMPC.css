@@ -1,0 +1,40 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at 10% 10%, #111d36 0%, #0b1628 100%);
+  color: #e8eef6;
+}
+.card {
+  border-left: 5px solid #00f5d4;
+}
+#output {
+  font-family: 'Courier New', monospace;
+  background: #0b0f19;
+  border-radius: 6px;
+  padding: 12px;
+  max-height: 600px;       
+  overflow-y: auto;
+  font-size: 14px;         
+}
+#output div {
+  line-height: 1.5em;
+}
+#flowchart {
+  font-family: 'Courier New', monospace;
+  color: #a0f;
+  min-height: 200px;
+}
+.progress {
+  background: rgba(255,255,255,0.06);
+  height: 20px;            
+  margin-top: 6px;
+}
+#progressBar {
+  height: 100%;
+  font-size: 12px;         
+}
+.badge {
+  font-weight: 600;
+}
+.fo{
+  margin-left: px;
+}

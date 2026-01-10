@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMPC Simulator - User Manual</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #212020;
+      color: #f8f9fa;
+    }
+    h1, h2 {
+      color: #0dcaf0;
+      margin-top: 1.5rem;
+    }
+    pre {
+      background-color: #212529;
+      color: #ffc107;
+      padding: 15px;
+      border-radius: 8px;
+      overflow: auto;
+    }
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      background-color: #212529;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    a {
+      color: #0dcaf0;
+    }
+    ul li, ol li {
+      margin-bottom: 0.4rem;
+    }
+  </style>
+</head>
+<body class="p-4">
+  <div class="container">
+    <a href="SMPC.html" style="text-decoration: none; color: #0dcaf0;">← Go Back to Simulator</a>
+    <h1 class="mb-4 text-center">Secure Multiparty Computation Simulator</h1>
+    <h2>Overview</h2>
+    <p>
+      The Secure Multiparty Computation (SMPC) Simulator is an <strong>interactive, educational tool</strong> that demonstrates how secrets can be securely distributed and reconstructed using cryptographic protocols.
+      It supports both:
+    </p>
+    <ul>
+      <li><strong>Additive Secret Sharing</strong> - simple modular arithmetic for share distribution.</li>
+      <li><strong>Shamir Secret Sharing</strong> - polynomial-based scheme using Lagrange interpolation.</li>
+    </ul>
+    <p>
+      The simulator shows how each share is generated and how the original secret can be reconstructed only when enough parties collaborate.
+      It is designed for students, educators, and researchers studying secure distributed computation, privacy-preserving algorithms, and modular arithmetic.
+    </p>
+    <h2>Mathematical Background</h2>
+    <h5>1. Additive Secret Sharing</h5>
+    <p>
+      Given a secret <code>S</code> and modulus <code>p</code> (prime), the secret is divided among <code>n</code> parties as follows:
+    </p>
+    <pre>
+Choose n-1 random numbers: r₁, r₂, ..., rₙ₋₁ ∈ [0, p)
+Compute last share: rₙ = (S - Σᵢrᵢ) mod p
+Then: S ≡ (r₁ + r₂ + ... + rₙ) mod p
+    </pre>
+    <p>
+      Any party alone learns nothing about <code>S</code>. The secret can be reconstructed only if all shares are combined.
+    </p>
+    <h5>2. Shamir Secret Sharing</h5>
+    <p>
+      The secret <code>S</code> is encoded as the constant term of a random polynomial <code>f(x)</code> of degree <code>t-1</code>:
+    </p>
+    <pre>
+f(x) = a₀ + a₁x + a₂x² + ... + aₜ₋₁x^(t-1)  (mod p)
+where a₀ = S
+Each share is a point (xᵢ, f(xᵢ))
+    </pre>
+    <p>
+      Any <code>t</code> shares can reconstruct the secret using <strong>Lagrange interpolation</strong>:
+    </p>
+    <pre>
+S = f(0) = Σ [ yᵢ * Π (0 - xⱼ)/(xᵢ - xⱼ) ] mod p
+           (for all j ≠ i)
+    </pre>
+    <p>
+      This scheme is <strong>t-out-of-n threshold secure</strong>, meaning fewer than <code>t</code> shares reveal nothing about <code>S</code>.
+    </p>
+    <h2>Behind the Scenes (Algorithms)</h2>
+    <ul>
+      <li><strong>Modular Arithmetic:</strong> All calculations are performed under a prime modulus to prevent overflow and ensure reversibility using modular inverses.</li>
+      <li><strong>Randomness:</strong> Shares are generated using uniform random integers modulo <code>p</code>.</li>
+      <li><strong>Exponentiation:</strong> Modular exponentiation (<code>modPow</code>) is used for computing inverses efficiently via Fermat's Little Theorem.</li>
+      <li><strong>Reconstruction:</strong> Each reconstruction step is displayed numerically, showing numerator, denominator, and modular inverse operations for transparency.</li>
+    </ul>
+    <h2>How to Run the Simulation</h2>
+    <ol>
+      <li><strong>Open the Simulator:</strong> Load <em>SMPC.html</em> in your browser.</li>
+      <li><strong>Select Protocol:</strong> Choose “Additive Sharing” or “Shamir Secret Sharing”.</li>
+      <li><strong>Configure Parameters:</strong>
+        <ul>
+          <li>Enter the secret (an integer &lt; modulus).</li>
+          <li>Set the number of parties <code>n</code>.</li>
+          <li>For Shamir’s scheme, specify threshold <code>t</code>.</li>
+          <li>Choose a prime modulus (a number greater than the secret).</li>
+        </ul>
+      </li>
+      <li><strong>Run Simulation:</strong> Press <strong>Run Next Step (S)</strong> to simulate share generation and reconstruction.</li>
+      <li><strong>Observe Output:</strong>
+        <ul>
+          <li>The <em>Simulation Steps</em> panel shows modular computations step-by-step.</li>
+          <li>The <em>Protocol Flow</em> panel visualizes message passing and progress.</li>
+          <li>The progress bar indicates overall completion.</li>
+        </ul>
+      </li>
+      <li><strong>Reset:</strong> Press <strong>Reset (R)</strong> to clear data and start again.</li>
+    </ol>
+    <h2>Example Walkthrough</h2>
+    <h5>Additive Sharing Example</h5>
+    <pre>
+Secret S = 123, n = 3, p = 257
+Random shares: 50, 70
+Last share: (123 - (50+70)) mod 257 = 260 mod 257 = 3
+Shares: [50, 70, 3]
+Reconstruction: (50 + 70 + 3) mod 257 = 123
+    </pre>
+    <h5>Shamir Sharing Example</h5>
+    <pre>
+Secret S = 42, t = 2, n = 3, p = 97
+Polynomial: f(x) = 42 + 15x (mod 97)
+Shares: (1,57), (2,72), (3,87)
+Using any 2 shares:
+f(0) = y₁*(0-x₂)/(x₁-x₂) + y₂*(0-x₁)/(x₂-x₁) = 42 (mod 97)
+    </pre>
+    <h2>Keyboard Shortcuts</h2>
+    <ul>
+      <li><strong>S</strong> - Run next simulation step</li>
+      <li><strong>R</strong> - Reset simulation</li>
+      <li><strong>H</strong> - Scroll to top or show help</li>
+    </ul>
+    <h2>Troubleshooting & Notes</h2>
+    <ul>
+      <li><strong>Invalid modulus:</strong> Ensure modulus is prime and larger than the secret.</li>
+      <li><strong>Incorrect threshold:</strong> Threshold <code>t</code> must be ≤ number of parties <code>n</code>.</li>
+      <li><strong>Empty inputs:</strong> Fill all fields before running simulation.</li>
+      <li><strong>Browser support:</strong> Works best on latest Chrome, Firefox, or Edge.</li>
+      <li><strong>Educational mode:</strong> The simulator is designed for clarity, not for cryptographic production use.</li>
+    </ul>
+    <h2>Further Learning</h2>
+    <p>
+      To go deeper, explore:
+    </p>
+    <ul>
+      <li>“How to Share a Secret” - Adi Shamir, 1979</li>
+      <li>Secure Multiparty Computation tutorials (MIT, Stanford)</li>
+      <li>Homomorphic encryption and zero-knowledge proof techniques for modern MPC</li>
+    </ul>
+    <footer>All Rights &copy; Reserved | Secure Multiparty Computation Simulator</footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

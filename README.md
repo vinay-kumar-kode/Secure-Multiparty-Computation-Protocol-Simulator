@@ -8,11 +8,13 @@ This project helps students understand the mathematical and cryptographic concep
 Features
 - Supports Additive Secret Sharing (modular arithmetic based)
 - Supports Shamir Secret Sharing (polynomial & Lagrange interpolation)
+- Interactive Visualizations: Dynamic Flowcharts for Additive Sharing
+- Interactive Visualizations: Chart.js Graphing for Shamir Polynomials
 - Step-by-step numerical simulation of secret reconstruction
 - Real-time protocol flow visualization
 - Input validation (prime modulus, thresholds, etc.)
 - Keyboard shortcuts for fast interaction
-- Responsive UI using Bootstrap
+- Responsive UI using Bootstrap 5
 
 
 Concepts Covered

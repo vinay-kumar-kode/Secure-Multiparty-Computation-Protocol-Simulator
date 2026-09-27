@@ -35,6 +35,38 @@ body {
 .badge {
   font-weight: 600;
 }
-.fo{
-  margin-left: px;
+.fo {
+  margin-left: 0;
+}
+.flow-node {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 4px;
+  background: rgba(13, 202, 240, 0.15);
+  border: 1px solid #0dcaf0;
+  border-radius: 6px;
+  color: #0dcaf0;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+.flow-arrow {
+  display: inline-block;
+  margin: 4px;
+  color: #fff;
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+.flow-node.active {
+  background: rgba(25, 135, 84, 0.3);
+  border-color: #198754;
+  color: #198754;
+  transform: scale(1.05);
+}
+.flow-node.secret {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: #ffc107;
+  color: #ffc107;
 }
